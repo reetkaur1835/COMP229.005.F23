@@ -1,24 +1,39 @@
-const connect = require('connect');
-const app = connect();
+#!/usr/bin/env node
 
-function logger(req, res, next) {
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Hello World');
- };
+/**
+ * Module dependencies.
+ */
 
-function helloWorld(req, res, next) {
-   res.setHeader('Content-Type', 'text/plain');
-   res.end('Hello World');
-};
+var configDB = require('./config/db');
+var app = require('./config/app');
+var debug = require('debug')('comp229006:server');
+var http = require('http');
 
-function goodbyebro(req, res, next) {
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('GoodBye!');
-};
+/**
+ * Get port from environment and store in Express.
+ */
 
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
 
-app.use('/goodbye',goodbyebro);
-app.use('/hello', helloWorld);
-app.listen(3000);
-console.log('Server running at http://localhost:3000/');
+/**
+ * Create HTTP server.
+ */
+var db = configDB();
+var server = http.createServer(app);
 
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+
+}
